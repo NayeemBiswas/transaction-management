@@ -1,0 +1,36 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /trans
+    
+spring:
+  application:
+    name: trans-server
+   
+    
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.0.221:5432/pims_n
+    username: pims_n
+    password: pims_n#
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    
+    generate-ddl: true
+    show-sql: true
+  data:
+    redis:
+      repositories:
+        enabled: false
+
+    
+
+    
+    
+    
+    
