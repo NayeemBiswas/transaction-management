@@ -9,17 +9,24 @@ spring:
    
     
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://192.168.0.221:5432/pims_n
-    username: pims_n
-    password: pims_n#
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://192.168.0.221:5432/pims_n
+#    username: pims_n
+#    password: pims_n#
+    
+    url: jdbc:mysql://localhost:3309/trans_management?createDatabaseIfNotExist=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         
-    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+#    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
     
     generate-ddl: true
     show-sql: true

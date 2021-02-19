@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
 	<meta charset="utf-8">
@@ -71,14 +71,9 @@
 								</div>
 								<div class="col-lg-10">
 									<div style="display: flex;">
-										<input type="text"  maxlength="1" placeholder="D" style="width: 2em;">
-										<input type="text"  maxlength="1" placeholder="D" style="width: 2em">
-										<input type="text"  maxlength="1" placeholder="M" style="width: 2em">
-										<input type="text"  maxlength="1" placeholder="M" style="width: 2em">
-										<input type="text"  maxlength="1" placeholder="Y" style="width: 2em">
-										<input type="text"  maxlength="1" placeholder="Y" style="width: 2em">
-										<input type="text"  maxlength="1" placeholder="Y" style="width: 2em">
-										<input type="text"  maxlength="1" placeholder="Y" style="width: 2em">
+										<input type="text"  maxlength="1" placeholder="D" th:value="${date}" style="width: 2em;">
+										<input type="text"  maxlength="1" placeholder="M" th:value="${month}" style="width: 2em">
+										<input type="text"  maxlength="1" placeholder="Y" th:value="${year}" style="width: 5em">
 									</div>
 								</div>
 							</div>
@@ -89,12 +84,12 @@
 			<br>
 
 			<!-- middle body -->
-			<div class="row">
+			<div class="row" th:object="${info}" >
 					<div class="col-lg-8">
 						<div style="margin-left: 13%">
-							<p>Pay To</p>
+							<p>Pay To <p th:text="${info.payTo}"></p></p>
 							<hr>
-							<p>The Sum of Taka</p>
+							<p>The Sum of Taka <p th:text="${info.sumOfAmount}"></p></p>
 							<hr>
 							<br>
 							<hr>
@@ -103,7 +98,7 @@
 					<div class="col-lg-4">
 						<div style="margin-left: 17%">
 							<p style="margin-left: 66%;">or bearer</p>
-							<input type="text" placeholder=" TK" style="width: 16em; height: 3em">
+							<input type="text" placeholder=" TK" style="width: 16em; height: 3em" th:value="${info.taka}">
 						</div>
 						<div>
 							<br><br><br>
