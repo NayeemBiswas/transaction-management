@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.example.transactionmanagement.common.message.BaseResponse;
 import com.example.transactionmanagement.model.dto.ChequeDto;
+import com.example.transactionmanagement.model.entity.Balance;
 
 /**
  * @author Nayeem
@@ -22,6 +23,10 @@ public interface ChequeInfoService {
 	public ChequeDto findChequeById(Long id);
 	
 	public List<ChequeDto> findAllCheque();
+	
+	public void saveBalance(Balance balance);
+	
+	public Balance getBalance(Long id);
 	
 //	public Long dayWizeCheque(int day);
 //	

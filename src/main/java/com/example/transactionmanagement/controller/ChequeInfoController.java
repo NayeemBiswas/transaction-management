@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.transactionmanagement.common.message.BaseResponse;
 import com.example.transactionmanagement.common.message.CustomMessage;
 import com.example.transactionmanagement.model.dto.ChequeDto;
+import com.example.transactionmanagement.model.entity.Balance;
 import com.example.transactionmanagement.service.ChequeInfoService;
 
 /**
@@ -42,6 +43,7 @@ public class ChequeInfoController {
 	SimpleDateFormat month = new SimpleDateFormat("MM");
 	SimpleDateFormat year = new SimpleDateFormat("yyyy");
 	
+	
 //	int days = Integer.parseInt(day.format(date));
 //	int months = Integer.parseInt(month.format(date));
 //	int years = Integer.parseInt(year.format(date));
@@ -58,24 +60,18 @@ public class ChequeInfoController {
 		
 		for(ChequeDto dto: chequeDtos)
 		{
-			System.out.println(dto);
 			
-			System.out.println("dto: " +dto.getDay());
-			System.out.println("simple:  " +day.format(date));
-			
-			
-			if(dto.getDay().toString().equals(day.format(date)))
-			{
-				dayWizeCheque++;
-				System.out.println(dayWizeCheque);
-			}
-			if(dto.getMonth().toString().equals(month.format(date)))
-			{
-				monthWizeCheque++;
-			}
 			if(dto.getYear().equals(year.format(date)))
 			{
 				yearWizeCheque++;
+				if(dto.getMonth().toString().equals(month.format(date)))
+				{
+					monthWizeCheque++;
+					if(dto.getDay().toString().equals(day.format(date)))
+					{
+						dayWizeCheque++;
+					}
+				}
 			}
 		}
 		
@@ -88,8 +84,14 @@ public class ChequeInfoController {
 		model.addAttribute("dayWizeCheque", dayWizeCheque);
 		model.addAttribute("monthWizeCheque", monthWizeCheque);
 		model.addAttribute("yearWizeCheque", yearWizeCheque);
+		model.addAttribute("balance", getBalance());
 		
 		return "inputField";
+	}
+	
+	public Double getBalance()
+	{
+		return service.getBalance((long) 1).getBalance();
 	}
 
 	@RequestMapping("/i")
@@ -99,15 +101,6 @@ public class ChequeInfoController {
 
 	@PostMapping("/add-cheque")
 	public String addCheque(@ModelAttribute("cheque") ChequeDto chequeDto, Model model) {
-
-
-//		chequeDto.setDay(Integer.parseInt(day.format(date)));
-//		chequeDto.setMonth(Integer.parseInt(month.format(date)));
-//		chequeDto.setYear(Integer.parseInt(year.format(date)));
-		
-//		chequeDto.setDay(days);
-//		chequeDto.setMonth(months);
-//		chequeDto.setYear(years);
 		
 		chequeDto.setDay(day.format(date));
 		chequeDto.setMonth(month.format(date));
@@ -115,18 +108,20 @@ public class ChequeInfoController {
 		
 		BaseResponse response = service.createOrUpdateCheque(chequeDto);
 		
+
+			Balance balance = new Balance();
+			
+			balance.setId((long) 1);
+			balance.setLastUpdate(date);
+			balance.setBalance(service.getBalance((long) 1).getBalance() - chequeDto.getTaka());
+			service.saveBalance(balance);
+		
+		
 		model.addAttribute("info", chequeDto);
 
 		return "index";
 	}
 
-//    @GetMapping("/info/")
-//    public String findCheque(Model model, ChequeDto chequeDto) {
-//    	       
-//       model.addAttribute("info", chequeDto);
-//       
-//       return "index";
-//    }
 
 	@GetMapping("/info/{id}")
 	public String findChequeById(@PathVariable("id") Long id, Model model) {

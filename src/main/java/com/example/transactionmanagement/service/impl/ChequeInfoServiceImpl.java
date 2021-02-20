@@ -20,7 +20,9 @@ import com.example.transactionmanagement.common.exception.RecordNotFoundExceptio
 import com.example.transactionmanagement.common.message.BaseResponse;
 import com.example.transactionmanagement.common.message.CustomMessage;
 import com.example.transactionmanagement.model.dto.ChequeDto;
+import com.example.transactionmanagement.model.entity.Balance;
 import com.example.transactionmanagement.model.entity.ChequeInfo;
+import com.example.transactionmanagement.repository.BalanceRepository;
 import com.example.transactionmanagement.repository.ChequeInfoRepository;
 import com.example.transactionmanagement.service.ChequeInfoService;
 
@@ -33,6 +35,9 @@ public class ChequeInfoServiceImpl implements ChequeInfoService {
 
 	@Autowired
 	private ChequeInfoRepository repo;
+	
+	@Autowired
+	private BalanceRepository balanceRepo;
 
 	@Override
 	public BaseResponse createOrUpdateCheque(ChequeDto chequeDto) {
@@ -100,6 +105,20 @@ public class ChequeInfoServiceImpl implements ChequeInfoService {
 		
 		return chequeDto;
 		
+	}
+
+	@Override
+	public Balance getBalance(Long id) {
+		
+		return balanceRepo.findById(id).orElseThrow(() -> 
+		new RecordNotFoundException(CustomMessage.NO_RECORD_FOUND));
+	}
+
+	
+	@Override
+	public void saveBalance(Balance balance) {
+		
+		 balanceRepo.save(balance);
 	}
 
 }
