@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author Nayeem
@@ -29,6 +30,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class ChequeDto {
 	
 	private Long id;
@@ -41,6 +43,10 @@ public class ChequeDto {
 	
 	private String accountNo;
 
-	private Date createdDate;
+	private String day;
+	
+	private String month;
+	
+	private String year;
 
 }

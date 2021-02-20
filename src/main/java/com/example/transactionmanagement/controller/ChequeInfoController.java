@@ -6,7 +6,9 @@
  */
 package com.example.transactionmanagement.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,9 +35,60 @@ public class ChequeInfoController {
 
 	@Autowired
 	private ChequeInfoService service;
+	
+	Date date = new Date();
+	
+	SimpleDateFormat day = new SimpleDateFormat("dd");
+	SimpleDateFormat month = new SimpleDateFormat("MM");
+	SimpleDateFormat year = new SimpleDateFormat("yyyy");
+	
+//	int days = Integer.parseInt(day.format(date));
+//	int months = Integer.parseInt(month.format(date));
+//	int years = Integer.parseInt(year.format(date));
 
 	@RequestMapping("/")
-	public String chequeForm() {
+	public String chequeForm(Model model) {
+		List<ChequeDto> chequeDtos = service.findAllCheque();
+		model.addAttribute("cheques", chequeDtos);
+		
+		int dayWizeCheque = 0;
+		int monthWizeCheque =0;
+		int yearWizeCheque =0;
+
+		
+		for(ChequeDto dto: chequeDtos)
+		{
+			System.out.println(dto);
+			
+			System.out.println("dto: " +dto.getDay());
+			System.out.println("simple:  " +day.format(date));
+			
+			
+			if(dto.getDay().toString().equals(day.format(date)))
+			{
+				dayWizeCheque++;
+				System.out.println(dayWizeCheque);
+			}
+			if(dto.getMonth().toString().equals(month.format(date)))
+			{
+				monthWizeCheque++;
+			}
+			if(dto.getYear().equals(year.format(date)))
+			{
+				yearWizeCheque++;
+			}
+		}
+		
+
+		
+//		Long dayWizeCheque = service.dayWizeCheque(days);
+//		Long monthWizeCheque = service.dayWizeCheque(months);
+//		Long yearWizeCheque = service.dayWizeCheque(years);
+		
+		model.addAttribute("dayWizeCheque", dayWizeCheque);
+		model.addAttribute("monthWizeCheque", monthWizeCheque);
+		model.addAttribute("yearWizeCheque", yearWizeCheque);
+		
 		return "inputField";
 	}
 
@@ -47,30 +100,23 @@ public class ChequeInfoController {
 	@PostMapping("/add-cheque")
 	public String addCheque(@ModelAttribute("cheque") ChequeDto chequeDto, Model model) {
 
-		BaseResponse response = service.createOrUpdateCheque(chequeDto);
 
-//        if(response.getCode() == 201)
-//        {
-//        	model.addAttribute("addBookSuccess", true);
-//        	return "forward:/cheque/info/"+chequeDto.getId();
-//        }
-//        else {
-//            return CustomMessage.SAVE_FAILED_MESSAGE;
-//		}
-
-//        model.addAttribute("addBookSuccess", true);
-		chequeDto.setCreatedDate(new Date());
+//		chequeDto.setDay(Integer.parseInt(day.format(date)));
+//		chequeDto.setMonth(Integer.parseInt(month.format(date)));
+//		chequeDto.setYear(Integer.parseInt(year.format(date)));
 		
-		int date = chequeDto.getCreatedDate().getDate();
-		int month = chequeDto.getCreatedDate().getMonth();
-		int year = chequeDto.getCreatedDate().getYear();
+//		chequeDto.setDay(days);
+//		chequeDto.setMonth(months);
+//		chequeDto.setYear(years);
+		
+		chequeDto.setDay(day.format(date));
+		chequeDto.setMonth(month.format(date));
+		chequeDto.setYear(year.format(date));
+		
+		BaseResponse response = service.createOrUpdateCheque(chequeDto);
+		
 		model.addAttribute("info", chequeDto);
-		model.addAttribute("date", date);
-		model.addAttribute("month", month);
-		model.addAttribute("year", year);
 
-
-//    	return "forward:/cheque/info/"+chequeDto.getId();
 		return "index";
 	}
 

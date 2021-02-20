@@ -7,6 +7,8 @@
 package com.example.transactionmanagement.service.impl;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +38,10 @@ public class ChequeInfoServiceImpl implements ChequeInfoService {
 	public BaseResponse createOrUpdateCheque(ChequeDto chequeDto) {
 
 		ChequeInfo chequeInfo = new ChequeInfo();
+		
+		chequeInfo.setDay(chequeDto.getDay());
 
 		BeanUtils.copyProperties(chequeDto, chequeInfo);
-		chequeInfo.setCreatedDate(new Date());
 		if (chequeInfo.getId() == null) {
 			try {
 				repo.save(chequeInfo);
@@ -60,11 +63,43 @@ public class ChequeInfoServiceImpl implements ChequeInfoService {
 	@Override
 	public ChequeDto findChequeById(Long id) {
 		ChequeInfo chequeInfo = repo.findById(id).orElseThrow(() -> new RecordNotFoundException(CustomMessage.NO_RECORD_FOUND));
+		
+		return copyEntityToDto(chequeInfo);
+	}
+
+	@Override
+	public List<ChequeDto> findAllCheque() {
+		List<ChequeInfo> chequeInfos = repo.findAll();
+		
+		return chequeInfos.stream().map(cheque -> copyEntityToDto(cheque)).collect(Collectors.toList());
+	}
+
+//	@Override
+//	public Long dayWizeCheque(int day) {
+//		
+//		return repo.countByDay(day);
+//	}
+//
+//	@Override
+//	public Long monthWizeCheque(int month) {
+//		// TODO Auto-generated method stub
+//		return repo.countByMonth(month);
+//	}
+//
+//	@Override
+//	public Long yearWizeCheque(int year) {
+//		// TODO Auto-generated method stub
+//		return repo.countByYear(year);
+//	}
+	
+	ChequeDto copyEntityToDto(ChequeInfo chequeInfo)
+	{
 		ChequeDto chequeDto = new ChequeDto();
 		
 		BeanUtils.copyProperties(chequeInfo, chequeDto);
 		
 		return chequeDto;
+		
 	}
 
 }

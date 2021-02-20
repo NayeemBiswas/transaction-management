@@ -63,8 +63,14 @@ public class ChequeInfo {
 	@Column(name = "account_no")
 	private String accountNo;
 	
-	@Column(name = "create_date")
-	private Date createdDate;
+	@Column(name = "day")
+	private String day;
+	
+	@Column(name = "month")
+	private String month;
+	
+	@Column(name = "year")
+	private String year;
 	
 }
 

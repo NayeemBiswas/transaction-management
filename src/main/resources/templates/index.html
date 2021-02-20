@@ -25,7 +25,7 @@
 		</div>
 
 		<!-- header boady -->
-		<div class="container" style="background-color: #FDF2E9">
+		<div class="container" th:object="${info}" style="background-color: #FDF2E9">
 			<div class="header-content">
 				<div class="row">
 					<div class="col-lg-1 col-md-1">
@@ -71,9 +71,9 @@
 								</div>
 								<div class="col-lg-10">
 									<div style="display: flex;">
-										<input type="text"  maxlength="1" placeholder="D" th:value="${date}" style="width: 2em;">
-										<input type="text"  maxlength="1" placeholder="M" th:value="${month}" style="width: 2em">
-										<input type="text"  maxlength="1" placeholder="Y" th:value="${year}" style="width: 5em">
+										<input type="text"  maxlength="1" placeholder="D" th:value="${info.day}" style="width: 2em;">
+										<input type="text"  maxlength="1" placeholder="M" th:value="${info.month}" style="width: 2em">
+										<input type="text"  maxlength="1" placeholder="Y" th:value="${info.year}" style="width: 5em">
 									</div>
 								</div>
 							</div>
@@ -84,12 +84,12 @@
 			<br>
 
 			<!-- middle body -->
-			<div class="row" th:object="${info}" >
+			<div class="row" >
 					<div class="col-lg-8">
 						<div style="margin-left: 13%">
-							<p>Pay To <p th:text="${info.payTo}"></p></p>
+							<p>Pay To: <span th:text="${info.payTo}"></span></p>
 							<hr>
-							<p>The Sum of Taka <p th:text="${info.sumOfAmount}"></p></p>
+							<p>The Sum of Taka: <span th:text="${info.sumOfAmount}"></span></p>
 							<hr>
 							<br>
 							<hr>

@@ -255,32 +255,18 @@
 				<table class="table table-hover bg-light">
 					<thead>
 						<tr>
-							<th scope="col">Bank Name</th>
-							<th scope="col">Branch Name</th>
+							<th scope="col">Pay To</th>
+							<th scope="col">Account Number</th>
 							<th scope="col">Amount</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody data-th-each="cheque : ${cheques}">
 						<tr>
-							<td>city Bank</td>
-							<td>Dhnmondi Branch</td>
-							<td>10,00000</td>
+							<td th:text="${cheque.payTo}"></td>
+							<td th:text="${cheque.accountNo}"></td>
+							<td th:text="${cheque.taka}"></td>
 						</tr>
-						<tr>
-							<td>National Bank</td>
-							<td>Gulshan Branch</td>
-							<td>7,00000</td>
-						</tr>
-						<tr>
-							<td>Brac Bank</td>
-							<td>Uttara Branch</td>
-							<td>6,00000</td>
-						</tr>
-						<tr>
-							<td>Islami Bank</td>
-							<td>Banani Branch</td>
-							<td>11,00000</td>
-						</tr>
+
 					</tbody>
 				</table>
 			</div>
@@ -318,15 +304,11 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>2 Cheques</td>
-							<td>60 Cheques</td>
-							<td>420 Cheques</td>
+							<td th:text="${dayWizeCheque}"></td>
+							<td th:text="${monthWizeCheque}"></td>
+							<td th:text="${yearWizeCheque}"></td>
 						</tr>
-						<tr>
-							<td>3 Cheques</td>
-							<td>90 Cheques</td>
-							<td>620 Cheques</td>
-						</tr>
+
 					</tbody>
 				</table>
 			</div>

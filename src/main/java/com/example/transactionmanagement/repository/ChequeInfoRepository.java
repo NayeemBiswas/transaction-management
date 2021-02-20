@@ -20,4 +20,9 @@ import com.example.transactionmanagement.model.entity.ChequeInfo;
 @Repository
 public interface ChequeInfoRepository extends JpaRepository<ChequeInfo, Long> {
 
+//	public Long countByDay(int day);
+	
+//	public Long countByMonth(int month);
+//	
+//	public Long countByYear(int year);
 }
